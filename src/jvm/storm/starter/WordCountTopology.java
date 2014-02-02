@@ -64,9 +64,15 @@ public class WordCountTopology {
    * A bolt that counts the words that it receives
    */
   static class ConsumerBolt extends BaseRichBolt {
+      //our code
+      int myCounter = 0;
+
+      //end of our code
+
     private OutputCollector collector;
     private Map<String, Integer> countMap;
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
+
       collector = outputCollector;
       countMap = new HashMap<String, Integer>();
     }
@@ -79,6 +85,24 @@ public class WordCountTopology {
       } else {
         Integer val = countMap.get(key);
         countMap.put(key, ++val);
+
+         //our code
+          myCounter++;
+          //if (myCounter % 1000 == 0) {
+              System.out.println("jake!!!!!!!!!!!!!!!!!!!!!!!!");
+
+              for (String name: countMap.keySet()){
+
+                  String myKey =name.toString();
+                  String myValue = countMap.get(name).toString();
+                  System.out.println(myKey + " " + myValue);
+
+
+              }
+
+          //}
+
+          //end of our code
       }
       collector.ack(tuple);
     }
